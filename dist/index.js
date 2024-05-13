@@ -268,11 +268,11 @@ function deserializeSingleEvent(stream, deltaTime, lastEventTypeByte, setLastEve
             /* meta event */
             var type = "meta";
             var subtypeByte = stream.readInt8();
-            var length = stream.readVarInt();
+            var length_1 = stream.readVarInt();
             switch (subtypeByte) {
                 case MIDIMetaEvents.sequenceNumber:
-                    if (length !== 2)
-                        throw new Error("Expected length for sequenceNumber event is 2, got " + length);
+                    if (length_1 !== 2)
+                        throw new Error("Expected length for sequenceNumber event is 2, got " + length_1);
                     return {
                         deltaTime: deltaTime,
                         type: type,
@@ -284,53 +284,53 @@ function deserializeSingleEvent(stream, deltaTime, lastEventTypeByte, setLastEve
                         deltaTime: deltaTime,
                         type: type,
                         subtype: "text",
-                        text: stream.readStr(length),
+                        text: stream.readStr(length_1),
                     };
                 case MIDIMetaEvents.copyrightNotice:
                     return {
                         deltaTime: deltaTime,
                         type: type,
                         subtype: "copyrightNotice",
-                        text: stream.readStr(length),
+                        text: stream.readStr(length_1),
                     };
                 case MIDIMetaEvents.trackName:
                     return {
                         deltaTime: deltaTime,
                         type: type,
                         subtype: "trackName",
-                        text: stream.readStr(length),
+                        text: stream.readStr(length_1),
                     };
                 case MIDIMetaEvents.instrumentName:
                     return {
                         deltaTime: deltaTime,
                         type: type,
                         subtype: "instrumentName",
-                        text: stream.readStr(length),
+                        text: stream.readStr(length_1),
                     };
                 case MIDIMetaEvents.lyrics:
                     return {
                         deltaTime: deltaTime,
                         type: type,
                         subtype: "lyrics",
-                        text: stream.readStr(length),
+                        text: stream.readStr(length_1),
                     };
                 case MIDIMetaEvents.marker:
                     return {
                         deltaTime: deltaTime,
                         type: type,
                         subtype: "marker",
-                        text: stream.readStr(length),
+                        text: stream.readStr(length_1),
                     };
                 case MIDIMetaEvents.cuePoint:
                     return {
                         deltaTime: deltaTime,
                         type: type,
                         subtype: "cuePoint",
-                        text: stream.readStr(length),
+                        text: stream.readStr(length_1),
                     };
                 case MIDIMetaEvents.midiChannelPrefix:
-                    if (length !== 1)
-                        throw new Error("Expected length for midiChannelPrefix event is 1, got " + length);
+                    if (length_1 !== 1)
+                        throw new Error("Expected length for midiChannelPrefix event is 1, got " + length_1);
                     return {
                         deltaTime: deltaTime,
                         type: type,
@@ -338,8 +338,8 @@ function deserializeSingleEvent(stream, deltaTime, lastEventTypeByte, setLastEve
                         value: stream.readInt8(),
                     };
                 case MIDIMetaEvents.portPrefix:
-                    if (length !== 1)
-                        throw new Error("Expected length for midiChannelPrefix event is 1, got " + length);
+                    if (length_1 !== 1)
+                        throw new Error("Expected length for midiChannelPrefix event is 1, got " + length_1);
                     return {
                         deltaTime: deltaTime,
                         type: type,
@@ -347,16 +347,16 @@ function deserializeSingleEvent(stream, deltaTime, lastEventTypeByte, setLastEve
                         port: stream.readInt8(),
                     };
                 case MIDIMetaEvents.endOfTrack:
-                    if (length !== 0)
-                        throw new Error("Expected length for endOfTrack event is 0, got " + length);
+                    if (length_1 !== 0)
+                        throw new Error("Expected length for endOfTrack event is 0, got " + length_1);
                     return {
                         deltaTime: deltaTime,
                         type: type,
                         subtype: "endOfTrack",
                     };
                 case MIDIMetaEvents.setTempo:
-                    if (length !== 3)
-                        throw new Error("Expected length for setTempo event is 3, got " + length);
+                    if (length_1 !== 3)
+                        throw new Error("Expected length for setTempo event is 3, got " + length_1);
                     return {
                         deltaTime: deltaTime,
                         type: type,
@@ -366,8 +366,8 @@ function deserializeSingleEvent(stream, deltaTime, lastEventTypeByte, setLastEve
                             stream.readInt8(),
                     };
                 case MIDIMetaEvents.smpteOffset: {
-                    if (length !== 5)
-                        throw new Error("Expected length for smpteOffset event is 5, got " + length);
+                    if (length_1 !== 5)
+                        throw new Error("Expected length for smpteOffset event is 5, got " + length_1);
                     var hourByte = stream.readInt8();
                     var table = {
                         0x00: 24,
@@ -388,8 +388,8 @@ function deserializeSingleEvent(stream, deltaTime, lastEventTypeByte, setLastEve
                     };
                 }
                 case MIDIMetaEvents.timeSignature:
-                    if (length !== 4)
-                        throw new Error("Expected length for timeSignature event is 4, got " + length);
+                    if (length_1 !== 4)
+                        throw new Error("Expected length for timeSignature event is 4, got " + length_1);
                     return {
                         deltaTime: deltaTime,
                         type: type,
@@ -400,8 +400,8 @@ function deserializeSingleEvent(stream, deltaTime, lastEventTypeByte, setLastEve
                         thirtyseconds: stream.readInt8(),
                     };
                 case MIDIMetaEvents.keySignature:
-                    if (length !== 2)
-                        throw new Error("Expected length for keySignature event is 2, got " + length);
+                    if (length_1 !== 2)
+                        throw new Error("Expected length for keySignature event is 2, got " + length_1);
                     return {
                         deltaTime: deltaTime,
                         type: type,
@@ -414,31 +414,31 @@ function deserializeSingleEvent(stream, deltaTime, lastEventTypeByte, setLastEve
                         deltaTime: deltaTime,
                         type: type,
                         subtype: "sequencerSpecific",
-                        data: stream.read(length),
+                        data: stream.read(length_1),
                     };
                 default:
                     return {
                         deltaTime: deltaTime,
                         type: type,
                         subtype: "unknown",
-                        data: stream.read(length),
+                        data: stream.read(length_1),
                     };
             }
         }
         else if (eventTypeByte === 0xf0) {
-            var length = stream.readVarInt();
+            var length_2 = stream.readVarInt();
             return {
                 deltaTime: deltaTime,
                 type: "sysEx",
-                data: stream.read(length),
+                data: stream.read(length_2),
             };
         }
         else if (eventTypeByte === 0xf7) {
-            var length = stream.readVarInt();
+            var length_3 = stream.readVarInt();
             return {
                 deltaTime: deltaTime,
                 type: "dividedSysEx",
-                data: stream.read(length),
+                data: stream.read(length_3),
             };
         }
         else {
@@ -539,7 +539,8 @@ function deserializeSingleEvent(stream, deltaTime, lastEventTypeByte, setLastEve
 
 /* Wrapper for accessing strings through sequential reads */
 var Stream = /** @class */ (function () {
-    function Stream(buf) {
+    function Stream(buf, textEncoding) {
+        if (textEncoding === void 0) { textEncoding = "utf-8"; }
         this.position = 0;
         if (buf instanceof DataView) {
             this.buf = buf;
@@ -556,14 +557,14 @@ var Stream = /** @class */ (function () {
         else {
             throw new Error("not supported type: " + typeof buf);
         }
+        this.textDecoder = new TextDecoder(textEncoding);
     }
     Stream.prototype.readByte = function () {
         return this.buf.getUint8(this.position++);
     };
     Stream.prototype.readStr = function (length) {
-        return this.read(length)
-            .map(function (e) { return String.fromCharCode(e); })
-            .join("");
+        var text = this.read(length);
+        return this.textDecoder.decode(new Uint8Array(text));
     };
     Stream.prototype.read = function (length) {
         var result = [];
@@ -622,7 +623,8 @@ var Stream = /** @class */ (function () {
 class to parse the .mid file format
 (depends on stream.js)
 */
-function read(data) {
+function read(data, textEncoding) {
+    if (textEncoding === void 0) { textEncoding = "utf-8"; }
     function readChunk(stream) {
         var id = stream.readStr(4);
         var length = stream.readInt32();
@@ -632,12 +634,12 @@ function read(data) {
             data: stream.read(length),
         };
     }
-    var stream = new Stream(data);
+    var stream = new Stream(data, textEncoding);
     var headerChunk = readChunk(stream);
     if (headerChunk.id !== "MThd" || headerChunk.length !== 6) {
         throw new Error("Bad .mid file - header not found");
     }
-    var headerStream = new Stream(headerChunk.data);
+    var headerStream = new Stream(headerChunk.data, textEncoding);
     var formatType = headerStream.readInt16();
     var trackCount = headerStream.readInt16();
     var timeDivision = headerStream.readInt16();
@@ -664,10 +666,10 @@ function read(data) {
         if (trackChunk.id !== "MTrk") {
             throw new Error("Unexpected chunk - expected MTrk, got " + trackChunk.id);
         }
-        var trackStream = new Stream(trackChunk.data);
+        var trackStream = new Stream(trackChunk.data, textEncoding);
         while (!trackStream.eof()) {
-            var event = readEvent(trackStream);
-            tracks[i].push(event);
+            var event_1 = readEvent(trackStream);
+            tracks[i].push(event_1);
         }
     }
     return {
@@ -923,8 +925,8 @@ function write(tracks, ticksPerBeat) {
     var _loop_1 = function (track) {
         buf.writeChunk("MTrk", function (it) {
             for (var _i = 0, track_1 = track; _i < track_1.length; _i++) {
-                var event = track_1[_i];
-                it.writeBytes(serialize(event));
+                var event_1 = track_1[_i];
+                it.writeBytes(serialize(event_1));
             }
         });
     };

@@ -365,7 +365,8 @@ type StreamSource = DataView | number[] | ArrayBuffer | Uint8Array;
 declare class Stream {
     private buf;
     private position;
-    constructor(buf: StreamSource);
+    private textDecoder;
+    constructor(buf: StreamSource, textEncoding?: string);
     readByte(): number;
     readStr(length: number): string;
     read(length: number): number[];
@@ -397,7 +398,7 @@ interface MidiFile {
 class to parse the .mid file format
 (depends on stream.js)
 */
-declare function read(data: StreamSource): MidiFile;
+declare function read(data: StreamSource, textEncoding?: string): MidiFile;
 declare function serialize(e: AnyEvent, includeDeltaTime?: boolean): number[];
 //https://sites.google.com/site/yyagisite/material/smfspec#format
 declare function write(tracks: AnyEvent[][], ticksPerBeat?: number): Uint8Array;

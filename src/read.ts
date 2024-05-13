@@ -17,7 +17,7 @@ export interface MidiFile {
 class to parse the .mid file format
 (depends on stream.js)
 */
-export function read(data: StreamSource): MidiFile {
+export function read(data: StreamSource, textEncoding = "utf-8"): MidiFile {
   function readChunk(stream: Stream) {
     const id = stream.readStr(4)
     const length = stream.readInt32()
@@ -28,12 +28,12 @@ export function read(data: StreamSource): MidiFile {
     }
   }
 
-  const stream = new Stream(data)
+  const stream = new Stream(data, textEncoding)
   const headerChunk = readChunk(stream)
   if (headerChunk.id !== "MThd" || headerChunk.length !== 6) {
     throw new Error("Bad .mid file - header not found")
   }
-  const headerStream = new Stream(headerChunk.data)
+  const headerStream = new Stream(headerChunk.data, textEncoding)
   const formatType = headerStream.readInt16()
   const trackCount = headerStream.readInt16()
   const timeDivision = headerStream.readInt16()
@@ -69,7 +69,7 @@ export function read(data: StreamSource): MidiFile {
     if (trackChunk.id !== "MTrk") {
       throw new Error("Unexpected chunk - expected MTrk, got " + trackChunk.id)
     }
-    const trackStream = new Stream(trackChunk.data)
+    const trackStream = new Stream(trackChunk.data, textEncoding)
     while (!trackStream.eof()) {
       const event = readEvent(trackStream)
       tracks[i].push(event)

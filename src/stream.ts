@@ -8,8 +8,9 @@ export type StreamSource =
 export class Stream {
   private buf: DataView
   private position = 0
+  private textDecoder: TextDecoder
 
-  constructor(buf: StreamSource) {
+  constructor(buf: StreamSource, textEncoding = "utf-8") {
     if (buf instanceof DataView) {
       this.buf = buf
     } else if (buf instanceof ArrayBuffer) {
@@ -21,6 +22,8 @@ export class Stream {
     } else {
       throw new Error("not supported type: " + typeof buf)
     }
+
+    this.textDecoder = new TextDecoder(textEncoding)
   }
 
   readByte() {
@@ -28,9 +31,9 @@ export class Stream {
   }
 
   readStr(length: number): string {
-    return this.read(length)
-      .map(e => String.fromCharCode(e))
-      .join("")
+    const text = this.read(length)
+
+    return this.textDecoder.decode(new Uint8Array(text))
   }
 
   read(length: number): number[] {
